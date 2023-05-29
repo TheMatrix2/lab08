@@ -7,18 +7,17 @@ HOST = '127.0.0.1'
 PORT = 8080
 
 logging.basicConfig(level=logging.INFO)
-sock = socket.socket()
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.bind((HOST, PORT))
 sock.listen()
 logging.info(f'Server started')
-# print(sock.accept())
-con, addr = sock.accept()
-con.send('Hello! Connect!'.encode())
 
 while True:
+    con, addr = sock.accept()
     output = ''
     data = con.recv(1024).decode()
     output += data
+    con.send('Hello! Connect!'.encode())
     if not data:
         break
     print(output)
