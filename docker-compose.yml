@@ -32,9 +32,12 @@ services:
       - "127.0.0.1:8080:8080"
     networks:
       net:
-        ipv4_address: 172.28.0.2
+        ipv4_address: 192.168.77.77
   client:
     build: ./client
+    networks:
+      net:
+        ipv4_address: 192.168.77.90
     depends_on:
       - server
     restart: on-failure
@@ -44,5 +47,4 @@ networks:
     driver: bridge
     ipam:
       config:
-       - subnet: 172.28.0.0/24
-         gateway: 172.28.0.1
+       - subnet: 192.168.77.0/24

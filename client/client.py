@@ -2,12 +2,13 @@
 
 import socket
 
-# HOST = '192.168.77.77'
+HOST = '192.168.77.77'
 PORT = 8080
+p = [10, 10, 20, 20]
 
 con = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-con.connect(('172.28.0.2', PORT))
-con.send("Hello!".encode())
+con.connect((HOST, PORT))
+con.send(f'{p[0]},{p[1]},{p[2]},{p[3]}'.encode())
 rd = con.recv(1024)
 print(rd.decode())
 con.close()
