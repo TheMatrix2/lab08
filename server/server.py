@@ -1,23 +1,21 @@
 # Сервер
 
-import logging
-import socket
-import perform
+from flask import Flask, request, jsonify
+from math import sqrt
 
-HOST = '127.0.0.1'
-PORT = 8080
+app = Flask(__name__)
 
-logging.basicConfig(level=logging.INFO)
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.bind((HOST, PORT))
-sock.listen()
-logging.info(f'Server started')
 
-while True:
-    con, addr = sock.accept()
-    logging.info(f'Connected: {addr}')
-    data = [int(x) for x in con.recv(1024).decode().split(',')]
-    output = perform.perform(data[0], data[1], data[2], data[3])
-    con.send(f"Hello! You're connected\n{output}".encode())
-    if not data:
-        break
+@app.route('/distance', methods=['GET'])
+def distance():
+    x1 = float(request.args.get('x1'))
+    y1 = float(request.args.get('y1'))
+    x2 = float(request.args.get('x2'))
+    y2 = float(request.args.get('y2'))
+    d = sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
+
+    return jsonify({'distance': d})
+
+
+if __name__ == '__main__':
+    app.run(host='127.0.0.1', port=8080, debug=True)

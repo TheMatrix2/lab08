@@ -1,50 +1,20 @@
-#version: '3'
-
-#services:
-#  server:
-#    build: ./server
-#    ports:
-#      - "8080:8080"
-#    networks:
-#      serverConnection:
-#        ipv4_address: 192.168.77.77
-#  client:
-#    build: ./client
-#    networks:
-#      serverConnection:
-#        ipv4_address: 192.168.77.90
-#    depends_on:
-#      - server
-#    restart: on-failure
-#networks:
-#  serverConnection:
-#    ipam:
-#      driver: default
-#      config:
-#        - subnet: 192.168.77.0/24
-
 version: '3'
 
 services:
   server:
     build: ./server
     ports:
-      - "127.0.0.1:8080:8080"
-    networks:
-      net:
-        ipv4_address: 192.168.77.77
+      - "8080:8080"
   client:
     build: ./client
-    networks:
-      net:
-        ipv4_address: 192.168.77.90
+    network_mode: host
     depends_on:
       - server
-    restart: on-failure
+#    restart: on-failure
 
-networks:
-  net:
-    driver: bridge
-    ipam:
-      config:
-       - subnet: 192.168.77.0/24
+#networks:
+#  net:
+#    driver: bridge
+#    ipam:
+#      config:
+#       - subnet: 192.168.77.0/24

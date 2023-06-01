@@ -1,14 +1,15 @@
 # Клиент
 
-import socket
+import requests
 
-HOST = '192.168.77.77'
-PORT = 8080
-p = [10, 10, 20, 20]
+url = 'http://192.168.77.77:8080/distance'
+params = {'x1': 1, 'y1': 2, 'x2': 3, 'y2': 4}
 
-con = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-con.connect((HOST, PORT))
-con.send(f'{p[0]},{p[1]},{p[2]},{p[3]}'.encode())
-rd = con.recv(1024)
-print(rd.decode())
-con.close()
+response = requests.get(url, params=params)
+
+if response.status_code == 200:
+    data = response.json()
+    distance = data['distance']
+    print(f'The distance between the points is {distance}')
+else:
+    print('Error:', response.status_code)
