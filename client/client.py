@@ -2,7 +2,7 @@
 
 import requests
 
-url = 'http://192.168.77.77:8080/distance'
+url = 'http://127.0.0.1:8080/distance'
 params = {'x1': 1, 'y1': 2, 'x2': 3, 'y2': 4}
 
 response = requests.get(url, params=params)
